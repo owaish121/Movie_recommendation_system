@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Recommendation System</title>
+  <style>
+    /* 1. Modern Background & Reset */
+    * { box-sizing: border-box; }
+    body {
+      background: radial-gradient(circle at top, #2c3e50, #000000);
+      color: white;
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 40px;
+      text-transform: uppercase;
+    }
+
+  h2 {
+    font-size: 1.2rem;
+      font-weight: 500;
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+  }
+
+    /* 2. Glassmorphism Search Box */
+    .input-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      margin-bottom: 50px;
+    }
+
+    select {
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: none;
+      width: 320px;
+      background: #1a1a1a;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    button {
+      padding: 12px 25px;
+      background: linear-gradient(45deg, #e74c3c, #c0392b);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-left: 15px;
+      transition: 0.3s ease;
+      box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(231, 76, 60, 0.5);
+    }
+
+    /* 3. Horizontal Grid for Output */
+    .result-container {
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .recommendations-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .movie-card {
+      background: rgba(255, 255, 255, 0.05);
+      width: 200px;
+      padding: 20px;
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .movie-card:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(1.1);
+      border-color: #ff4b2b;
+    }
+
+    .movie-card .icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .movie-card strong {
+      display: block;
+      font-size: 1rem;
+      line-height: 1.4;
+      color: #ecf0f1;
+    }
+
+    .title-label {
+      font-size: 1.5rem;
+      color: #bdc3c7;
+      border-bottom: 2px solid #e74c3c;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎬 Movie Engine</h1>
+  <h2>Movie Recommendation System</h2>
+
+  <div class="input-container">
+    <form action="/recommend" method="post">
+        <select name="selected_movie">
+            {% for movie in movie_list %}
+                <option value="{{ movie }}" {% if movie == chosen_movie %}selected{% endif %}>{{ movie }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Show Results</button>
+    </form>
+  </div>
+
+  {% if recommendations %}
+  <div class="result-container">
+      <h3 class="title-label">Recommended for You:</h3>
+      <div class="recommendations-grid">
+          {% for movie in recommendations %}
+            <div class="movie-card">
+                <span class="icon">🍿🎞</span>
+                <strong>{{ movie }}</strong>
+            </div>
+          {% endfor %}
+      </div>
+  </div>
+  {% endif %}
+
+</body>
+</html>
