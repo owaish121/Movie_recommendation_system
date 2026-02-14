@@ -5,7 +5,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 app = Flask(__name__)
-new_df = pd.read_csv("new_df.csv")
+csv_path = os.path.join(os.path.dirname(__file__), "new_df.csv")
+new_df = pd.read_csv(csv_path)
 
 @app.route('/')
 def index():
